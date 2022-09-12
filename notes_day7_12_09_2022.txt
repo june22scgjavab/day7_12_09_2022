@@ -1,0 +1,333 @@
+
+Aggregation:-has a relationship.
+
+
+public class Car{
+private String registrationNo;
+private String model;
+
+}
+
+public class Person {
+
+   private int age;
+   private Car car; // Whenever we create a reference of other class in a class, then we say that 
+ // The class which is having the object is with has-a relationship with the class whose object you 
+ // create in the class. In our case Person is having a car. Person has-a car.
+
+public Person(int age, Car car){
+  this.age=age;
+  this.car=car;
+}
+
+public void setAge(int age){
+   this.age=age;
+}
+
+public void setCar(Car car){
+  this.car=car;
+}
+
+public int getAge(){
+ return age;
+}
+
+public Car getCar(){
+ return car;
+}
+
+}
+
+public class Tester{
+  public static void main(String[] args){
+1.  Car car=new Car();
+2. car.setRegistrationNumber("WB00129");
+3.  car.setModel("xyz");
+4.  Person person=new Person(24,car);
+  }
+}
+
+In line 1 , we created an object of Car by writing new Car() and after that we assigned the 
+address of the newly created car object in the reference variable car.
+In line 2 we set the details of registration number and line line 3 we set the Model for the car.
+In line 4 we created an object of Person and we invoked the parameterized constructor and
+initialised the Person with age 24 and passing the object reference of car which we created in line 1.
+
+
+
+[Note: In the above case it is an example of has relationship] 
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------
+Association:-uses-a relationship. 
+
+public class Appointment{
+ 
+private LocalDate appointmentDate;
+private LocalTime appointmentTime;
+      
+
+}
+
+public class Address {
+
+private int hno;
+private String locality;
+private String city;
+private String state;
+ 
+}
+
+public class Patient {
+private int patientId;
+private int age;
+private String name;
+private Address address; // has-a relationship between Patient and the Address
+
+// In this example Appointment reference is not created as an
+// instance variable but it is local to the method makeAppointment
+// So here we can say that Patient is not having has a relationship
+// with the appointment but Patient uses an appointment object.
+public void makeAppointment(Appointment appointment){
+System.out.println(appointment.getAppointmentDate());
+System.out.println(appointment.getAppointmentTime());
+}
+
+public void setAddress(Address address){
+ this.address=address;
+}
+public Address getAddress(){
+return address;
+}
+
+
+}
+------------------------------------------------------------------------
+has-a and uses-a relationship
+public class Car{
+private String registrationNumber;
+  public void setRegistrationNumber(String registrationNumber){
+   this.registrationNumber=registrationNumber;
+  }
+  public String getRegistrationNumber(){
+   return registrationNumber;
+  }
+
+}
+
+public class Driver{
+  
+public void drives(Car car){   // uses a relationship
+  System.out.println("The driver drives the car with the registration number"+car.getRegistrationNumber());
+}
+
+}
+
+
+public class Owner{
+
+private Car car;
+private Driver driver;
+
+public Owner(Car car, Driver driver){
+ this.car=car;
+ this.owner=owner;
+}
+
+}
+
+public class Tester{
+public static void main(String args[]){
+Car car=new Car();
+Driver driver=new Driver();
+Owner owner=new Owner(car,driver);
+// Owner is having a car and driver both, so need to get a reference
+// of driver and car from the owner and the driver will drive the car of
+// the owner
+car=owner.getCar();
+driver=owner.getDriver();
+driver.drives(car);
+// driver can drive another car which is not related to the owner
+Car car2=new Car();  // We created a new object of Car
+driver.drives(car2);  // Driver object is not created but driver
+// object is retrieved from owner and that driver drives a new
+// car.
+
+
+}
+}
+
+------------------------------------------------------------------------------------------------------
+Writer is having a favorite Pen and writer writes in a piece of paper.
+Paper is having a paragraph.
+public class Paper{
+  private String paragraph;
+
+
+
+// constructor/setter/getter
+}
+public class Writer {
+private Pen pen;
+// constructor/setter/getter
+public void writeAParagraph(Paper paper){
+String content=pen.writes();
+paper.setParagraph(content);
+}
+}
+public class Pen    {
+public String writes(){
+  return "Welcome to the code, Object oriented programming is very
+          interesting.";
+}
+draws(){}
+}
+public class Tester {
+   public static void main(String[] args){
+    Paper paper=new Paper();
+    System.out.println(paper.getParagraph()); //null
+    // dont show us null but display an empty string   
+   // When the writer writes on the paper , then it should display
+   // Welcome to the code, Object oriented programming is very
+   // interesting.
+   }
+ }
+
+
+
+
+
+ 
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+Student is having address and Student is writing a Test and Test is having testId, subjectName, maxMarks. Student is having roll and name also.
+[ Hint: Student is having has-a relationship with Address and it will have uses relationship with Test]
+public class Address{
+private int hNo;
+private String locality;
+private String city;
+
+public Address(int hNo, String locality, String city){
+ this.hNo=hNo;
+ this.locality=locality;
+ this.city=city;
+}
+
+// setters/getters
+
+
+}
+public class Test{
+private int testId;
+private String subject;
+private int maxMarks;
+
+public Test(int testId, String subject, int maxMarks){
+  this.testId=testId;
+  this.subject=subject;
+  this.maxMarks=maxMarks;
+}
+
+// setters/getters
+
+}
+public class Student{
+private int roll;
+private String name;
+private Address address; // HAS-A
+
+public Student(int roll, String name, Address address){
+this.roll=roll;
+this.name=name;
+this.address=address;
+}
+
+// setters/getters
+
+public void writing(Test test){  // USES 
+  System.out.println(test.getTestId());
+  System.out.println(test.getSubject());
+  System.out.println(test.getMaxMarks());
+}
+
+}
+
+
+public class Tester{
+ 
+ public static void main(String[] args){
+
+ Test test=new Test(111,"Computer Sc",100);
+ Address address=new Address(1,"Gandhi Marg","Agra");
+ Student student=new Student(1,"Santosh",address);
+ System.out.println(student.getRoll()); //1
+ System.out.println(student.getName());  //Santosh
+ address=student.getAddress();
+ System.out.println(address.getHno()); //1
+ System.out.println(address.getLocality()); //Gandhi Marg
+ student.writing(test); // testId    111
+                           subjectName  Computer Sc
+                           maxMarks;     100
+ }
+}
+ 
+ 
+------------------------------------------------------------------------------------------------
+
+A Person is having age name and Address and the person is given a Form. In the 
+form we need to enter the name, we need to have address and the person has to fill his
+hobbies[].
+public class Form {
+private int id;
+private String name;
+private Address address;
+private String hobbies[];
+// setters/getters
+}
+public class Address{}
+public class Person{
+ private int age;
+ private String name;
+ private Address address;
+ public Form fillForm(Form form){
+   String hobbies[]={"Singing","Surfing"};
+   // Fill up the form and return the form object.
+ }
+constructors/setters/getters
+}
+public class FormMain{
+   public static void main(String args[]){
+    Form form=new Form(); // So default constructor is invoked
+    Address address=new Address();
+    address.setHno(111);
+    address.setLocality();
+    address.setCity();
+    Person person=new Person(23,"Ashok,address);
+    person.fillForm(form);
+    System.out.println(form.getId());
+    System.out.println(form.getName());
+ 
+   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
