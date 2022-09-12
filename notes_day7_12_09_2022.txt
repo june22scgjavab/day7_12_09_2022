@@ -602,4 +602,15 @@ But if we create the object of the sub class with default constructor, then the 
 implicitly call the default constructor of the Parent class.]
 -------------------------------------------------------------------------------------------------
 
+class Person{}
+class Student extends Person {}
+class CollegeStudent extends Student {}
 
+-------------------------------------------------------------------------------------------------------------------
+
+Multiple Inheritence
+
+  public class Employee{}
+  public class Educator{}
+  public class Manager extends Employee,Eductor {} // this is not permissible in Java. 
+  // We are trying a subclass inheriting multiple Parent classes.
