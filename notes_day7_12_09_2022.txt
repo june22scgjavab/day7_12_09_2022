@@ -314,20 +314,292 @@ public class FormMain{
  
    }
 }
+-------------------------------------------------------------------------------------------------------------------------
+I need to keep a track of Managers and Clerks.
 
 
+public class Manager {
+  private int id;
+  private String name;
+  private int yrsOfExperience;
+
+}
+
+public class Clerk {
+  private int id;
+  private String name;
+  private int typingSpeed;
+}
+[ In both the above classes we are repeating the attributes id and name. Let us write the code so that we dont have to repeat
+id and name in each of the above classes. How it can be done? It can be achieved through the concept od Inheritence]
+
+We can make classes being sub-class of another class. 
+
+// Employee will be Parent,Base,Super class
+public class Employee{
+ protected int id;
+ protected String name;
+// So declaring a member as protected, the can be accessed by the sub-classes. Those subclasses
+// can be in the same package or different sub-packages. 
 
 
+}
+
+public class Manager extends Employee{
+private int yrsOfExperience;
+}
+public class Clerk extends Employee{}
+private int typingSpeed;
+}
 
 
+[ Whenever we are designing the classes with Parent-Child relationship it is called as
+IS-A relationship or Inheritence. In the base class or parent class we keep the attributes
+which can be inherited by the subclasses and subclasses contain the attributes which are
+specfic to the sub-classes].
+
+------------------------------------------------------------
+
+public class Parent {
+private int i;
+
+}
+
+public class Child extends Parent {
+
+public void display(){
+  System.out.println(i); // we will get compilation error as private member of the parent class cannot be accessed by the sub-class.
+}
+}
+
+--------------------------------------
+public class Parent {
+  
+  public void displayParent(){
+   System.out.println("I am the display method of the Parent");
+
+  }
+}
+
+public class Child extends Parent{
+
+ public void displayChild(){
+  System.out.println("I am the display method of the child class");
+ }
+}
+
+public class InheritDemo1{
+  public static void main(String args[]){
+    Child child=new Child();
+    child.displayParent();
+    child.displayChild();
+  }
+}
+---------------------------------------------------------------------------------------------------------------
+
+Constructors are special method for initialisation of the instance variables and thus initialising objects.
+
+public class Data{
+
+private int num;
+
+public void display(){
+ System.out.println(num);
+ }
+
+}
+
+public class Main{
+   public static void main(String args[]){
+     Data data=new Data(); // new Data() is basically responsible for creating a new object
+    // and at the same time it is invoking the default constructor. When we dont write our
+    // own constructor in the class, a default constructor is provided during the compilation
+    // time.
+    data.display(); // 0
+  }
+} 
+
+----------------------------------------------------------------------------------
+
+public class Data{
+
+private int num;
+
+public Data(){
+num=20;
+}
+public Data(int num){
+this.num=num;
+}
+
+public void display(){
+ System.out.println(num);
+ }
+
+}
+
+public class Main{
+   public static void main(String args[]){
+     Data data=new Data(); // new Data() is basically responsible for creating a new object
+    // and at the same time it is invoking the default constructor. In this example we wrote our own 
+    // parameterless and parameterized constructor
+    data.display(); // 20
+    Dara data1=new Data(200); 
+    data1.display(); //200
+  }
+} 
 
 
+--------------------------------------
+class Customer {
+	public Customer() {
+		// 3: Parent constructor will be executed
+		System.out.println("Creating a customer...");
+		// 4: The flow will go back to the child constructor
+	}
+}
+class RegularCustomer extends Customer {
+	public RegularCustomer() {
+		// 2: This constructor will then call the parent constructor
+		System.out.println("It is a regular customer!");
+		// 5: The flow will finally come here
+	}
+}
+public class Tester {
+	public static void main(String[] args) {
+		RegularCustomer regularCustomer = new RegularCustomer();
+		// 1: This line will be executed first and the flow will go to [2]
+	}
+}
+
+In the above example the default/parameterless constructor of the sub class invokes the default/parameterless 
+constructor of the Parent class,
+
+Creating a customer...
+It is a regular customer!"
+
+--------------------------------------------------------------------------------------------------------------
+So if the parameterized constructor of the sub class in not invoking the parameterized constructor of super/parent class,
+then the parent class default constructor is called.
+
+package com.infosys.demos.inheritence.parameterized.demo1;
+class Customer {
+	private String customerId;
+	private String customerName;
+	public Customer(String customerId, String customerName) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+	}
+	public Customer() {
+		System.out.println("Parent Default Constructor");
+	}
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public void displayCustomerDetails() {
+		System.out.println("Displaying customer details \n***************************");
+		System.out.println("Customer Id : " + customerId);
+		System.out.println("Customer Name : " + customerName);
+		System.out.println();
+	}
+}
 
 
+package com.infosys.demos.inheritence.parameterized.demo1;
+class RegularCustomer extends Customer {
+	private float discount;
+	public RegularCustomer(String custId, String custName) {
+		this.setCustomerId(custId);
+		this.setCustomerName(custName);
+		this.discount = 5.0f;
+		System.out.println("Child Constructor");
+	}
+	public float getDiscount() {
+		return discount;
+	}
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+}
 
 
+package com.infosys.demos.inheritence.parameterized.demo1;
+public class Tester {
+	public static void main(String[] args) {
+		RegularCustomer regularCustomer = new RegularCustomer("C1010",
+				"Johns Kora");
+		regularCustomer.displayCustomerDetails();
+	}
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+We want to call the parameterized constructor of the Parent class from 
+the sub class parameterized constructor.
 
 
+package com.infosys.inheritence.parameterized.demo2;
+class Customer {
+	private String customerId;
+	private String customerName;
 
+        public Customer(){
+           System.out.println("I am the default constructor of Parent class");
+        }
+	public Customer(String customerId, String customerName) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+		System.out.println("I am the parameterized constructor of Parent class");
+	}
+	public void displayCustomerDetails() {
+		System.out.println("Displaying customer details \n***************************");
+		System.out.println("Customer Id : " + this.customerId);
+		System.out.println("Customer Name : " + this.customerName);
+	}
+}
+class RegularCustomer extends Customer {
+	private float discount;
+        public RegularCustomer(){
+        super(); // This is implicit and if we dont write this statement , then also the default constructor 
+        // will be called.
+        System.out.println("I am the default constructor of Child class");
+        }
+
+	public RegularCustomer(String custId, String custName) {
+		//System.out.println("I am before the constructor call");//Constructor call must be the first statement in a constructor
+		super(custId, custName); // Invoking the parent class parameterized constructor and this has to be first line
+		this.discount = 5.0f;
+		System.out.println("I am the parameterized constructor of the child class");
+	}
+	public float getDiscount() {
+		return discount;
+	}
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+}
+public class Tester {
+	public static void main(String[] args) {
+		RegularCustomer regularCustomer = new RegularCustomer("C1010", "Johns Kora");
+		regularCustomer.displayCustomerDetails();
+                RegularCustomer regularCustomer2=new RegularCustomer();
+	}
+}
+[ In the above example we have created objects of the Child class with the help of default and parameterized constructor.
+If we want to invoke from parameterized constructor of the Child class , the parameterized constructor of parent,
+we have to make use of super keyword in constructor call super(custId, custName); . If we are not doing so ,
+it will try to call the default constructor of the base class.
+But if we create the object of the sub class with default constructor, then the default constructor of the sub class
+implicitly call the default constructor of the Parent class.]
+-------------------------------------------------------------------------------------------------
 
 
